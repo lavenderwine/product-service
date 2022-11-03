@@ -6,9 +6,6 @@ import { ProductNotFoundException } from '../common/exception';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
-
-// TODO: Error handling
-// TODO: Unit testing
 @Injectable()
 export class ProductsService {
 
