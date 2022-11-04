@@ -18,7 +18,7 @@ export class ProductsController {
   @Get()
   async findAll(): Promise<ApiResponseDto<Product[]>> {
     return {
-      data: await this.productsService.findAll()
+      data: await this.productsService.find()
     };
   }
 

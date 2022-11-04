@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsModule } from './products/products.module';
+import { DatabaseApiModule } from './integration/database-api/database-api.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { ProductsModule } from './products/products.module';
       },
       inject: [ConfigService],
     }),
-    ProductsModule
+    ProductsModule,
+    DatabaseApiModule
   ]
 })
 export class AppModule { }

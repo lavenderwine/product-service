@@ -59,7 +59,7 @@ describe('ProductsService', () => {
       mockedProductRepository.find.mockReturnValue(expected);
 
       // when
-      expect(await productService.findAll()).toEqual(expected);
+      expect(await productService.find()).toEqual(expected);
 
       // then
       expect(mockedProductRepository.find).toHaveBeenCalled();

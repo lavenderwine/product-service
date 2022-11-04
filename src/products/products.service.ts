@@ -1,7 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { StatusCode } from '../common/constants/status-code.enum';
+import { FindManyOptions, Repository } from 'typeorm';
 import { ProductNotFoundException } from '../common/exception';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -11,21 +10,21 @@ export class ProductsService {
 
   constructor(
     @InjectRepository(Product)
-    private productRepositoty: Repository<Product>
+    private productRepository: Repository<Product>
   ) {
 
   }
 
   async create(createProductDto: CreateProductDto) {
-    return this.productRepositoty.save(createProductDto);
+    return this.productRepository.save(createProductDto);
   }
 
-  async findAll() {
-    return await this.productRepositoty.find();
+  async find(params?: FindManyOptions<Product>) {
+    return await this.productRepository.find(params);
   }
 
   async findOne(id: number) {
-    const product = await this.productRepositoty.findOneBy({ id });
+    const product = await this.productRepository.findOneBy({ id });
 
     if (!product) {
       throw new ProductNotFoundException();
@@ -35,27 +34,27 @@ export class ProductsService {
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
-    const product = await this.productRepositoty.findOneBy({ id });
+    const product = await this.productRepository.findOneBy({ id });
 
     if (!product) {
       throw new ProductNotFoundException();
     }
 
-    await this.productRepositoty.update({
+    await this.productRepository.update({
       id
     }, {
       ...updateProductDto
     });
-    return await this.productRepositoty.findOneBy({ id });
+    return await this.productRepository.findOneBy({ id });
   }
 
   async remove(id: number) {
-    const product = await this.productRepositoty.findOneBy({ id });
+    const product = await this.productRepository.findOneBy({ id });
 
     if (!product) {
       throw new ProductNotFoundException();
     }
 
-    await this.productRepositoty.softDelete({ id });
+    await this.productRepository.softDelete({ id });
   }
 }
